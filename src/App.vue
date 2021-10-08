@@ -24,17 +24,23 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        href="https://github.com/SaberGuirat/tcc-vue-app"
         target="_blank"
         text
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>{{ name }}</v-icon>
+        <span class="mr-2">Github</span>
+        <v-icon> mdi-github </v-icon>
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <UsersTable :persons="persons" :headers="headers" />
+      <UsersTable
+        :persons="persons"
+        :headers="headers"
+        :addUser="addUser"
+        :deleteUser="deleteUser"
+        :updateUser="updateUser"
+      />
     </v-main>
   </v-app>
 </template>
@@ -44,6 +50,7 @@ import Vue from "vue";
 import UsersTable from "./components/UsersTable.vue";
 import Component from "vue-class-component";
 import { IPerson } from "./interfaces/person.interface";
+import PersonService from "./services/person.services";
 
 @Component({
   components: {
@@ -51,7 +58,6 @@ import { IPerson } from "./interfaces/person.interface";
   },
 })
 export default class App extends Vue {
-  name : string = "App";
   headers = [
     {
       text: "ID",
@@ -64,74 +70,55 @@ export default class App extends Vue {
     { text: "Email", value: "email" },
     { text: "Actions", value: "actions", sortable: false },
   ];
-  persons : IPerson[]= [
-    {
-      _id: "1",
-      firstName: "Frozen Yogurt",
-      lastName: "Frozen Yogurt@sdsdd.sdsd",
-      email: "Frozen Yogurt@sdsdd.sdsd",    },
-    {
-      _id: "1",
-      firstName: "Ice cream sandwich",
-      lastName: "Frozen Yogurt",
-      email: "Frozen Yogurt@sdsdd.sdsd",
+  persons: IPerson[] = [];
 
-    },
-    {
-      _id: "1",
-      firstName: "Eclair",
-      lastName: "Frozen Yogurt",
+  getAllUsers() {
+    PersonService.getAll()
+      .then((response) => {
+        console.log(response.data);
+        this.persons = response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
-      email: "Frozen Yogurt@sdsdd.sdsd",
-    },
-    {
-      _id: "1",
-      firstName: "Cupcake",
-      lastName: "Frozen Yogurt",
-      email: "Frozen Yogurt@sdsdd.sdsd",
+  addUser(person: IPerson) {
+    PersonService.create(person)
+      .then((response) => {
+        this.persons.push(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
-    },
-    {
-      _id: "1",
-      firstName: "Gingerbread",
-      lastName: "Frozen Yogurt",
+  deleteUser(id: string) {
+    PersonService.delete(id)
+      .then((response: any) => {
+        this.persons = this.persons.filter(
+          (person) => person._id !== response.data._id
+        );
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
-      email: "Frozen Yogurt@sdsdd.sdsd",
-    },
-    {
-      _id: "1",
-      firstName: "Jelly bean",
-      lastName: "Frozen Yogurt",
-      email: "Frozen Yogurt@sdsdd.sdsd",
+  updateUser(id: string, person: IPerson) {
+    PersonService.update(id, person)
+      .then((response: any) => {
+        this.persons = this.persons.map((person) => {
+          return person._id === response.data._id ? response.data : person;
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
-    },
-    {
-      _id: "1",
-      firstName: "Lollipop",
-      lastName: "Frozen Yogurt",
-      email: "Frozen Yogurt@sdsdd.sdsd",
-
-    },
-    {
-      _id: "1",
-      firstName: "Honeycomb",
-      lastName: "Frozen Yogurt",
-
-      email: "Frozen Yogurt@sdsdd.sdsd",
-    },
-    {
-      _id: "1",
-      firstName: "Donut",
-      lastName: "Frozen Yogurt",
-
-      email: "Frozen Yogurt@sdsdd.sdsd",
-    },
-    {
-      _id: "1",
-      firstName: "KitKat",
-      lastName: "Frozen Yogurt",
-      email: "Frozen Yogurt@sdsdd.sdsd",
-    },
-  ];
+  mounted() {
+    this.getAllUsers();
+  }
 }
 </script>
