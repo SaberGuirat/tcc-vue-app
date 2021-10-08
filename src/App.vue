@@ -75,7 +75,6 @@ export default class App extends Vue {
   getAllUsers() {
     PersonService.getAll()
       .then((response) => {
-        console.log(response.data);
         this.persons = response.data;
       })
       .catch((e) => {

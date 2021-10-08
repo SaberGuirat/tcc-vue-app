@@ -117,17 +117,9 @@ import { IPerson } from "../interfaces/person.interface";
     deleteUser: Function,
     updateUser: Function,
   },
-  watch: {
-    dialog(val) {
-      val || this.close();
-    },
-    dialogDelete(val) {
-      val || this.closeDelete();
-    },
-  },
 })
 export default class UsersTable extends Vue {
-  persons: IPerson[];
+  persons!: IPerson[];
   editedIndex = -1;
   editedPerson: IPerson = {
     firstName: "",
