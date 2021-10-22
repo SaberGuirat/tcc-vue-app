@@ -107,7 +107,7 @@ export default class App extends Vue {
       });
   }
 
-  mounted() {
+  created() {
     this.getAllUsers();
   }
 }
