@@ -11,6 +11,15 @@ describe("UsersTable.vue", () => {
   beforeEach(() => {
     vuetify = new Vuetify();
   });
+
+  const mountFunction = (options: any) => {
+    return mount(UsersTable, {
+      localVue,
+      vuetify,
+      ...options,
+    });
+  };
+
   it("renders props when passed", async () => {
     const headers = [
       {
@@ -41,9 +50,7 @@ describe("UsersTable.vue", () => {
     const updateUser = () => {
       console.log("update user");
     };
-    const wrapper = mount(UsersTable, {
-      localVue,
-      vuetify,
+    const wrapper = mountFunction({
       propsData: { headers, persons, addUser, deleteUser, updateUser },
     });
     expect(wrapper.html()).toMatchSnapshot();
