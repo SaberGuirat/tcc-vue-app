@@ -21,7 +21,7 @@ exports[`UsersTable.vue renders props when passed 1`] = `
           <div class="v-toolbar__title">Users Infos</div>
           <hr role="separator" aria-orientation="vertical" class="mx-4 v-divider v-divider--inset v-divider--vertical theme--light">
           <div class="spacer"></div>
-          <div role="dialog" class="v-dialog__container"><button type="button" class="mb-2 v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default primary" role="button" aria-haspopup="true" aria-expanded="false"><span class="v-btn__content">
+          <div role="dialog" class="v-dialog__container"><button type="button" class="mb-2 v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--default primary" id="addUser" role="button" aria-haspopup="true" aria-expanded="false"><span class="v-btn__content">
                 Add User
               </span></button>
             <!---->

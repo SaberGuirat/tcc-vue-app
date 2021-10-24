@@ -24,6 +24,7 @@
                   class="mb-2"
                   v-bind="attrs"
                   v-on="on"
+                  id="addUser"
                 >
                   Add User
                 </v-btn>
